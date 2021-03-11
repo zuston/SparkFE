@@ -1,3 +1,5 @@
+#!/bin/bash
+echo "CICD environment tag: ${CICD_RUNNER_TAG}"
 # Copyright 2021 4Paradigm
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,28 +14,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-image: develop-registry.4pd.io/centos6_gcc7_fesql:0.0.13
-variables:
-    GIT_SUBMODULE_STRATEGY: normal
-    CICD_RUNNER_THIRDPARTY_PATH: "/depends/thirdparty"
-
-before_script:
-    - source tools/init_env.profile.sh
-
-stages:
-  - build
-  - test
-
-build_fesql_on_linux:
-  stage: build
-  script:
-    - cd java
-    - mvn clean -U compile
-
-test_java_sdk_on_linux:
-  stage: test
-  script:
-    - cd java
-    - mvn clean -U test
-  dependencies:
-        - build_fesql_on_linux
+echo "Third party packages path: ${CICD_RUNNER_THIRDPARTY_PATH}"
+if [[ "$OSTYPE" == "linux-gnu"* ]]
+then
+    ln -sf /depends/thirdparty thirdparty
+    source /opt/rh/python27/enable
+    source /opt/rh/devtoolset-7/enable
+    export JAVA_HOME=${PWD}/thirdparty/jdk1.8.0_141
+    export PATH=${PWD}/thirdparty/bin:$JAVA_HOME/bin:${PWD}/thirdparty/apache-maven-3.6.3/bin:$PATH
+else
+    source ~/.bash_profile
+    ln -sf ${CICD_RUNNER_THIRDPARTY_PATH} thirdparty
+fi
