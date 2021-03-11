@@ -17,8 +17,8 @@ variables:
     GIT_SUBMODULE_STRATEGY: normal
     CICD_RUNNER_THIRDPARTY_PATH: "/depends/thirdparty"
 
-before_script:
-    - source tools/init_env.profile.sh
+# before_script:
+#     - source tools/init_env.profile.sh
 
 stages:
   - build
