@@ -5,7 +5,7 @@
 
     <groupId>com._4paradigm.fesql</groupId>
     <artifactId>fesql-sdk</artifactId>
-    <version>0.0.4-RELEASE</version>
+    <version>0.0.4-NativeSpark-SNAPSHOT</version>
     <modules>
            <module>fesql-spark</module>
     </modules>

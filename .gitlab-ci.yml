@@ -26,3 +26,12 @@ stages:
   - build
   - test
 
+build_fesql_on_linux:
+  stage: build
+  script:
+    - mvn clean -U compile
+
+test_java_sdk_on_linux:
+  stage: test
+  script:
+    - mvn clean -U test
