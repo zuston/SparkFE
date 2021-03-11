@@ -1,0 +1,30 @@
+java/fesql-spark/src/main/scala/com/_4paradigm/fesql/spark/nodes/LastJoinPlan.scala
+build
+build_mac
+thirdparty
+thirdsrc
+
+.vscode/
+.idea/
+
+*.dylib
+*.jnilib
+*.dylib
+*.so
+*.a
+
+src/fe_version.h
+
+# java ignore
+*.iml
+*.idea*
+java/*/target
+
+# ignore codegen files
+java/fesql-proto/src/main/java/com/*
+java/fesql-native/src/main/java/com/*
+
+# ignore docgen
+tools/documentation/udf_doxygen/html
+tools/documentation/udf_doxygen/udfs
+style.xml
