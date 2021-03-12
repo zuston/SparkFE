@@ -2,13 +2,9 @@
 		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
-<parent>
-		<artifactId>fesql-sdk</artifactId>
-		<groupId>com._4paradigm.fesql</groupId>
-		<version>0.0.4-NativeSpark-SNAPSHOT</version>
-		<relativePath>../pom.xml</relativePath>
-	</parent>
+
 	<modelVersion>4.0.0</modelVersion>
+	<groupId>com._4paradigm.fesql</groupId>
 	<artifactId>fesql-spark</artifactId>
 	<packaging>jar</packaging>
 	<name>fesql-spark</name>
@@ -83,12 +79,6 @@
             <version>1.19</version>
             <scope>provided</scope>
         </dependency>
-		<dependency>
-			<groupId>org.testng</groupId>
-			<artifactId>testng</artifactId>
-			<version>6.14.3</version>
-			<scope>test</scope>
-		</dependency>
 
 		<!-- Use for draw graph with graphviz -->
 		<dependency>
@@ -118,17 +108,41 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.7.0</version>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.20.1</version>
 				<configuration>
+					<reuseForks>false</reuseForks>
+					<forkCount>1</forkCount>
+					<argLine>-Xmx4G</argLine>
 					<forkMode>always</forkMode>
 				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>versions-maven-plugin</artifactId>
+				<version>2.2</version>
+			</plugin>
+			<plugin>
+				<groupId>org.scoverage</groupId>
+				<artifactId>scoverage-maven-plugin</artifactId>
+				<version>1.4.0-M5</version>
+				<executions>
+					<execution>
+						<id>scoverage-report</id>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>report</goal> <!-- or integration-check -->
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 			<plugin>
 				<groupId>net.alchim31.maven</groupId>
@@ -161,23 +175,6 @@
 						<phase>process-test-resources</phase>
 						<goals>
 							<goal>testCompile</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<groupId>org.scoverage</groupId>
-				<artifactId>scoverage-maven-plugin</artifactId>
-				<version>1.4.0-M5</version>
-				<configuration>
-					<scalaVersion>${scala.version}</scalaVersion>
-				</configuration>
-				<executions>
-					<execution>
-						<id>scoverage-report</id>
-						<phase>prepare-package</phase>
-						<goals>
-							<goal>report</goal> <!-- or integration-check -->
 						</goals>
 					</execution>
 				</executions>
@@ -401,6 +398,7 @@
 			</build>
 		</profile>
 
+
 		<!-- Build with Spark 2.3.0 -->
 		<profile>
 			<id>spark2.3.0</id>
@@ -427,6 +425,27 @@
 			</activation>
 		</profile>
 	</profiles>
+
+	<pluginRepositories>
+		<pluginRepository>
+			<id>4pd-nexus-public</id>
+			<name>4Paradigm nexus maven public</name>
+			<url>https://nexus.4pd.io/repository/maven-public/</url>
+		</pluginRepository>
+	</pluginRepositories>
+
+	<distributionManagement>
+		<repository>
+			<id>4pd-nexus-releases</id>
+			<uniqueVersion>true</uniqueVersion>
+			<url>https://nexus.4pd.io/repository/maven-releases/</url>
+		</repository>
+		<snapshotRepository>
+			<id>4pd-nexus-snapshots</id>
+			<uniqueVersion>true</uniqueVersion>
+			<url>https://nexus.4pd.io/repository/maven-snapshots/</url>
+		</snapshotRepository>
+	</distributionManagement>
 
 </project>
 
