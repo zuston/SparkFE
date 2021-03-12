@@ -110,7 +110,9 @@ cd ./benchmark_native_spark/
 从源码编译NativeSpark发行版。
 
 ```bash
-cd ./distribution/spark/
+git clone --recurse-submodules git@github.com:4paradigm/NativeSpark.git
+
+cd ./spark/
 
 ./dev/make-distribution.sh --name native-spark --pip --tgz -Phadoop-2.7 -Pyarn
 ```
