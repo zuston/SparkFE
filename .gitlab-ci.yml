@@ -27,13 +27,13 @@ stages:
 build_fesql_on_linux:
   stage: build
   script:
-    - cd java
+    - cd fesql-spark
     - mvn clean -U compile
 
 test_java_sdk_on_linux:
   stage: test
   script:
-    - cd java
+    - cd fesql-spark
     - mvn clean -U test
   dependencies:
         - build_fesql_on_linux
