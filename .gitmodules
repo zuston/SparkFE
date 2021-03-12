@@ -1,0 +1,3 @@
+[submodule "spark"]
+	path = spark
+	url = git@gitlab.4pd.io:internal-open-source/spark.git
