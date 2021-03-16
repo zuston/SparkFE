@@ -2,7 +2,7 @@
 
 ## 介绍
 
-NativeSpark是基于LLVM优化的Spark兼容的高性能原生执行引擎，解决Spark在AI场景落地的性能和一致性等问题。
+NativeSpark是基于LLVM优化的Spark兼容的高性能原生执行引擎，解决Spark在AI场景落地的性能和一致性等问题
 
 ![Architecture](./images/native_spark_architecture.png)
 
