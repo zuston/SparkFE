@@ -21,14 +21,19 @@ jobs:
     name: native-spark-compile
     runs-on: ubuntu-latest
     steps:
-    - name: compile
-      env:
-        MY_VAR: Hi there! My name is
-        FIRST_NAME: Mona
-        MIDDLE_NAME: The
-        LAST_NAME: Octocat
-      run: |
-        echo $MY_VAR $FIRST_NAME $MIDDLE_NAME $LAST_NAME.
-        echo `pwd`
-        cd ..
-        echo `ls`
+      - uses: actions/checkout@v2
+      - name: compile
+        env:
+          MY_VAR: Hi there! My name is
+          FIRST_NAME: Mona
+          MIDDLE_NAME: The
+          LAST_NAME: Octocat
+        run: |
+          echo $MY_VAR $FIRST_NAME $MIDDLE_NAME $LAST_NAME.
+          echo `pwd`
+          cd ..
+          echo `ls`
+          cd NativeSpark
+          echo `ls`
+          cd fesql-spark/
+          mvn clean compile
