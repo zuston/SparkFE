@@ -30,5 +30,4 @@ jobs:
       run: |
         echo $MY_VAR $FIRST_NAME $MIDDLE_NAME $LAST_NAME.
         echo `pwd`
-        cd fesql-spark/
-        mvn clean compile
+        echo `ls`
