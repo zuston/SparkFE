@@ -426,7 +426,7 @@
 		</profile>
 	</profiles>
 
-	<pluginRepositories>
+	<!-- <pluginRepositories>
 		<pluginRepository>
 			<id>4pd-nexus-public</id>
 			<name>4Paradigm nexus maven public</name>
@@ -445,7 +445,7 @@
 			<uniqueVersion>true</uniqueVersion>
 			<url>https://nexus.4pd.io/repository/maven-snapshots/</url>
 		</snapshotRepository>
-	</distributionManagement>
+	</distributionManagement> -->
 
 </project>
 
