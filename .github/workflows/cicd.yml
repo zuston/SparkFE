@@ -29,5 +29,6 @@ jobs:
         LAST_NAME: Octocat
       run: |
         echo $MY_VAR $FIRST_NAME $MIDDLE_NAME $LAST_NAME.
-        cd fesql-spark
+        echo `pwd`
+        cd ffesql-spark/
         mvn clean compile
