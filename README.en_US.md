@@ -1,8 +1,12 @@
 # NativeSpark 英文文档
 
-## 介绍
+## Introduction
 
 NativeSpark是基于LLVM优化的Spark兼容的高性能原生执行引擎，解决Spark在AI场景落地的性能和一致性等问题
+
+Nativespark is a high performance native execution engine based on llvm, which is compatible with Spark.
+
+
 
 ![Architecture](./images/native_spark_architecture.png)
 
