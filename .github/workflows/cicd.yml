@@ -13,8 +13,13 @@
 # limitations under the License.
 
 name: native-spark
-on: push
-
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
 jobs:
   my-job:
     name: native-spark-compile
