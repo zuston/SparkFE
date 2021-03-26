@@ -1,0 +1,21 @@
+build
+build_mac
+thirdparty
+thirdsrc
+
+.vscode/
+.idea/
+
+*.dylib
+*.jnilib
+*.dylib
+*.so
+*.a
+
+# java ignore
+*.iml
+*.idea*
+java/*/target
+
+# ignore maven target
+native-spark/target/
