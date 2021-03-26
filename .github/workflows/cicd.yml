@@ -13,11 +13,16 @@
 # limitations under the License.
 
 name: native-spark
-on: push
-
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
 jobs:
-  my-job:
-    name: native-spark-compile
+  unit-test:
+    name: Compile and run unit tests
     runs-on: self-hosted
     container: 
       image: maven:3.6-jdk-8
@@ -27,3 +32,7 @@ jobs:
         run: |
           cd native-spark/
           mvn --settings ../tools/settings.xml -U clean compile test
+      - uses: EnricoMi/publish-unit-test-result-action@v1
+        if: always()
+        with:
+          files: native-spark/target/**/TEST-*.xml
