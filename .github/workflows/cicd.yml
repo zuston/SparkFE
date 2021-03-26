@@ -23,7 +23,7 @@ jobs:
       image: maven:3.6-jdk-8
     steps:
       - name: Compile and run unit tests
-        uses: actions/checkout@v2
+      - uses: actions/checkout@v2
         run: |
           cd native-spark/
           mvn --settings ../tools/settings.xml -U clean compile test
