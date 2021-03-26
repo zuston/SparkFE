@@ -13,10 +13,7 @@
 # limitations under the License.
 
 name: native-spark
-on:
-  pull_request:
-    branches:
-      - main
+on: [pull_request]
 jobs:
   unit-test:
     name: unit-test
