@@ -17,7 +17,7 @@
 package com._4paradigm.hybridse.spark.sql
 
 class QuerySuites extends SQLBaseSuite {
-  /* TODO: Do on run yaml cases now
+  /* TODO: Do not run yaml cases now
   testCases("cases/query/fz_sql.yaml")
   testCases("cases/query/group_query.yaml")
   testCases("cases/query/last_join_query.yaml")
