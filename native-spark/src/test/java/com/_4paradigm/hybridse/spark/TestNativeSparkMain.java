@@ -94,6 +94,7 @@ public class TestNativeSparkMain {
         return config;
     }
 
+    /* TODO: This case is too heavy for unit test, uncomment after modification
     @Test(dataProvider = "skew_data")
     public void testSkewModeResult(String desc, String scriptPath, String jsonPath, String[] checkField, String output1, String output2, String config1, String config2) throws IOException {
         logger.info(desc);
@@ -138,9 +139,6 @@ public class TestNativeSparkMain {
         sess.close();
 
     }
-
-
-
-
+    */
 
 }
