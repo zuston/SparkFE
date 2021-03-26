@@ -22,7 +22,7 @@ on:
       - main
 jobs:
   unit-test:
-    name: native-spark-compile
+    name: Compile and run unit tests
     runs-on: self-hosted
     container: 
       image: maven:3.6-jdk-8
