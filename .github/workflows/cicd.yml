@@ -27,8 +27,13 @@ jobs:
     container: 
       image: maven:3.6-jdk-8
     steps:
-      - uses: actions/checkout@v2
-      - name: compile-and-test
+      - name: Compile and run unit tests
+        uses: actions/checkout@v2
         run: |
           cd native-spark/
           mvn --settings ../tools/settings.xml -U clean compile test
+      - name: Publish unit test results
+        uses: EnricoMi/publish-unit-test-result-action@v1
+        if: always()
+        with:
+          files: target/**/*.xml
