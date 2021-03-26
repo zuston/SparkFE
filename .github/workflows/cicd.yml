@@ -21,7 +21,7 @@ on:
     branches:
       - main
 jobs:
-  my-job:
+  unit-test:
     name: native-spark-compile
     runs-on: self-hosted
     container: 
@@ -32,3 +32,7 @@ jobs:
         run: |
           cd native-spark/
           mvn --settings ../tools/settings.xml -U clean compile test
+      - uses: EnricoMi/publish-unit-test-result-action@v1
+        if: always()
+        with:
+          files: native-spark/target/**/*.xml
