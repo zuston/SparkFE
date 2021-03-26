@@ -16,8 +16,8 @@ name: native-spark
 on: push
 
 jobs:
-  unit-test:
-    name: unit-test
+  my-job:
+    name: native-spark-compile
     runs-on: self-hosted
     container: 
       image: maven:3.6-jdk-8
