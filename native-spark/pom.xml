@@ -277,6 +277,11 @@
 			<version>0.18.0</version>
 		</dependency>
 
+		<dependency>
+			<groupId>com.puppycrawl.tools</groupId>
+			<artifactId>checkstyle</artifactId>
+			<version>8.41</version>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -458,6 +463,12 @@
 					</execution>
 				</executions>
 			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-site-plugin</artifactId>
+				<version>3.9.1</version>
+			</plugin>
 		</plugins>
 	</build>
 
@@ -495,6 +506,7 @@
 
 	<reporting>
 		<plugins>
+
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-checkstyle-plugin</artifactId>
@@ -509,6 +521,12 @@
 				<configuration>
 					<configLocation>google_checks.xml</configLocation>
 				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>com.github.spotbugs</groupId>
+				<artifactId>spotbugs-maven-plugin</artifactId>
+				<version>4.2.2</version>
 			</plugin>
 		</plugins>
 	</reporting>
