@@ -9,12 +9,12 @@ RUN pip install pyspark==3.0.0
 
 # Install Spark
 RUN wget https://archive.apache.org/dist/spark/spark-3.0.0/spark-3.0.0-bin-hadoop2.7.tgz
-RUN tar xzf ./spark-3.0.0-bin-hadoop2.7.tgz &&  rm ./spark-3.0.0-bin-hadoop2.7.tgz
+RUN tar xzf ./spark-3.0.0-bin-hadoop2.7.tgz && rm ./spark-3.0.0-bin-hadoop2.7.tgz
 
 # Install NativeSpark, 
 # TODO: Change to downlaod NativeSpark distribution
 COPY spark-3.0.0-bin-nativespark.tgz /
-RUN tar xzf ./spark-3.0.0-bin-nativespark.tgz &&  rm ./spark-3.0.0-bin-nativespark.tgz
+RUN tar xzf ./spark-3.0.0-bin-nativespark.tgz && rm ./spark-3.0.0-bin-nativespark.tgz
 
 # Setup environment
 ENV SPARK_HOME /spark-3.0.0-bin-nativespark/
