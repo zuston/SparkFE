@@ -277,11 +277,6 @@
 			<version>0.18.0</version>
 		</dependency>
 
-		<dependency>
-			<groupId>com.puppycrawl.tools</groupId>
-			<artifactId>checkstyle</artifactId>
-			<version>8.41</version>
-		</dependency>
 	</dependencies>
 
 	<build>
@@ -469,9 +464,26 @@
 				<artifactId>maven-site-plugin</artifactId>
 				<version>3.9.1</version>
 			</plugin>
-		</plugins>
-	</build>
 
+		</plugins>
+
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-checkstyle-plugin</artifactId>
+					<version>3.1.2</version>
+					<dependencies>
+						<dependency>
+							<groupId>com.puppycrawl.tools</groupId>
+							<artifactId>checkstyle</artifactId>
+							<version>8.41</version>
+						</dependency>
+					</dependencies>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
 
 	<!--
 	<distributionManagement>
