@@ -56,7 +56,8 @@ object SparkUtil {
     method.toLowerCase() match {
       case "zipwithuniqueid" | "zip_withunique_id" => addColumnByZipWithUniqueId(spark, df, indexColName)
       case "zipwithindex" | "zip_with_index" => addColumnByZipWithIndex(spark, df, indexColName)
-      case "monotonicallyincreasingid" | "monotonically_increasing_id" => addColumnByMonotonicallyIncreasingId(spark, df, indexColName)
+      case "monotonicallyincreasingid" | "monotonically_increasing_id" =>
+        addColumnByMonotonicallyIncreasingId(spark, df, indexColName)
       case _ => throw new HybridSEException("Unsupported add index column method: " + method)
     }
 
@@ -78,7 +79,8 @@ object SparkUtil {
     spark.createDataFrame(indexedRDD, df.schema.add(indexColName, LongType))
   }
 
-  def addColumnByMonotonicallyIncreasingId(spark: SparkSession, df: DataFrame, indexColName: String = null): DataFrame = {
+  def addColumnByMonotonicallyIncreasingId(spark: SparkSession,
+                                           df: DataFrame, indexColName: String = null): DataFrame = {
     logger.info("Use monotonicallyIncreasingId to generate index column")
     df.withColumn(indexColName, monotonically_increasing_id())
   }
@@ -96,7 +98,8 @@ object SparkUtil {
       val field1 = schema1.fields(i)
       val field2 = schema2.fields(i)
       if (field1.name != field2.name || field1.dataType != field2.dataType) {
-        logger.warn("Schema name or type not match, filed(%s %s) and field(%s %s)".format(field1.dataType, field1.name,field2.dataType, field2.name))
+        logger.warn("Schema name or type not match, filed(%s %s) and field(%s %s)"
+          .format(field1.dataType, field1.name,field2.dataType, field2.name))
         return false
       }
     }

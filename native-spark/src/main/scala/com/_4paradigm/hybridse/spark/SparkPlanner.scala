@@ -95,7 +95,9 @@ class SparkPlanner(session: SparkSession, config: NativeSparkConfig) {
   }
 
   // Bind the node index info for the nodes which use ConcatJoin for computing window concurrently
-  def bindNodeIndexInfo(concatJoinNode: PhysicalJoinNode, ctx: PlanContext, processedConcatJoinNodeIds: mutable.HashSet[Long], indexColumnName: String): Unit = {
+  def bindNodeIndexInfo(concatJoinNode: PhysicalJoinNode,
+                        ctx: PlanContext,
+                        processedConcatJoinNodeIds: mutable.HashSet[Long], indexColumnName: String): Unit = {
 
     val concatJoinNodeId = concatJoinNode.GetNodeId()
     if (ctx.hasIndexInfo(concatJoinNodeId)) {
@@ -139,7 +141,11 @@ class SparkPlanner(session: SparkSession, config: NativeSparkConfig) {
     return 0
   }
 
-  def visitAndBindNodeIndexInfo(ctx: PlanContext, node: PhysicalOpNode, destNodeId: Long, indexColumnName: String, processedConcatJoinNodeIds: mutable.HashSet[Long]): Unit = {
+  def visitAndBindNodeIndexInfo(ctx: PlanContext,
+                                node: PhysicalOpNode,
+                                destNodeId: Long,
+                                indexColumnName: String,
+                                processedConcatJoinNodeIds: mutable.HashSet[Long]): Unit = {
     if (ctx.hasIndexInfo(node.GetNodeId())) {
       // No need to set the node with index info again
       return
@@ -152,7 +158,8 @@ class SparkPlanner(session: SparkSession, config: NativeSparkConfig) {
     }
 
     // Check if it is concat join node
-    if (node.GetOpType() == PhysicalOpType.kPhysicalOpJoin && PhysicalJoinNode.CastFrom(node).join().join_type() == JoinType.kJoinTypeConcat) {
+    if (node.GetOpType() == PhysicalOpType.kPhysicalOpJoin
+      && PhysicalJoinNode.CastFrom(node).join().join_type() == JoinType.kJoinTypeConcat) {
       ctx.putNodeIndexInfo(node.GetNodeId(), new NodeIndexInfo(indexColumnName, NodeIndexType.InternalConcatJoinNode))
       processedConcatJoinNodeIds.add(node.GetNodeId())
     } else {

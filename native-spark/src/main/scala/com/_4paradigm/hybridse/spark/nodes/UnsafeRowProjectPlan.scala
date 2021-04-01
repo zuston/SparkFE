@@ -64,7 +64,8 @@ object UnsafeRowProjectPlan {
         // TODO: Set header version and size
         val versionHeaderBytes = ByteBuffer.allocate(2)
         val sizeHeaderBytes = ByteBuffer.allocate(4)
-        val appendHeaderBytes = ByteBuffer.allocate(headerSize + inputRowSize).put(versionHeaderBytes).put(sizeHeaderBytes).put(inputBaseObject).array()
+        val appendHeaderBytes = ByteBuffer.allocate(headerSize + inputRowSize)
+          .put(versionHeaderBytes).put(sizeHeaderBytes).put(inputBaseObject).array()
 
         // Call native method to compute
         val outputHybridseRow = CoreAPI.UnsafeRowProject(fn, appendHeaderBytes, inputRowSize, false)
@@ -77,7 +78,7 @@ object UnsafeRowProjectPlan {
         outputUnsafeRowWriter.zeroOutNullBytes()
 
         // Copy and remove header for output row
-        CoreAPI.CopyRowToUnsafeRowBytes(outputHybridseRow, outputUnsafeRowWriter.getBuffer, outputRowWithoutHeaderSize);
+        CoreAPI.CopyRowToUnsafeRowBytes(outputHybridseRow, outputUnsafeRowWriter.getBuffer, outputRowWithoutHeaderSize)
 
         // Release native row memory
         outputHybridseRow.delete()
@@ -91,9 +92,11 @@ object UnsafeRowProjectPlan {
 
     val sparkSessionClass = Class.forName("org.apache.spark.sql.SparkSession")
     val internalCreateDataFrameMethod = sparkSessionClass
-      .getDeclaredMethod(s"internalCreateDataFrame", classOf[RDD[InternalRow]], classOf[StructType], classOf[Boolean])
+      .getDeclaredMethod(s"internalCreateDataFrame",
+        classOf[RDD[InternalRow]], classOf[StructType], classOf[Boolean])
 
-    val outputDf =  internalCreateDataFrameMethod.invoke(ctx.getSparkSession, projectRDD, outputSchema, false: java.lang.Boolean)
+    val outputDf =
+      internalCreateDataFrameMethod.invoke(ctx.getSparkSession, projectRDD, outputSchema, false: java.lang.Boolean)
       .asInstanceOf[DataFrame]
 
     SparkInstance.fromDataFrame(outputDf)

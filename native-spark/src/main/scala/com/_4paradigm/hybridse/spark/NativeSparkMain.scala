@@ -71,7 +71,9 @@ object NativeSparkMain {
         logger.info(s"schema=${df.sparkDf.schema.toDDL}")
       }
     }
-    val feconfig = sql2Feconfig(sqlScript, HybridseUtil.getDatabase(nativeSparkConfig.configDBName, sess.registeredTables.toMap))//parseOpSchema(rquestEngine.getPlan)
+    val feconfig = sql2Feconfig(sqlScript,
+      HybridseUtil.getDatabase(nativeSparkConfig.configDBName, sess.registeredTables.toMap))
+    //parseOpSchema(rquestEngine.getPlan)
     val tableInfoRDD = sess.getSparkSession.sparkContext.parallelize(Seq(feconfig)).repartition(1)
     HDFSUtil.deleteIfExist(config.getOutputPath + "/config")
     tableInfoRDD.saveAsTextFile(config.getOutputPath + "/config")
