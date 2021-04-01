@@ -44,7 +44,8 @@ class WindowComputer(sqlConfig: NativeSparkConfig,
 
   // Add the index column at the end of generated row if this node need to output dataframe with index column
   // reuse spark output row backed array
-  private val outputFieldNum = if (keepIndexColumn) config.outputSchemaSlices.map(_.size).sum + 1 else config.outputSchemaSlices.map(_.size).sum
+  private val outputFieldNum =
+  if (keepIndexColumn) config.outputSchemaSlices.map(_.size).sum + 1 else config.outputSchemaSlices.map(_.size).sum
   private val outputArr = Array.fill[Any](outputFieldNum)(null)
 
   // native row codecs
@@ -120,7 +121,8 @@ class WindowComputer(sqlConfig: NativeSparkConfig,
     Row.fromSeq(outputArr) // can reuse backed array
   }
 
-  def unsafeCompute(internalRow: InternalRow, key: Long, keepIndexColumn: Boolean, unionFlagIdx: Int, outputSchema: StructType): InternalRow = {
+  def unsafeCompute(internalRow: InternalRow,
+                    key: Long, keepIndexColumn: Boolean, unionFlagIdx: Int, outputSchema: StructType): InternalRow = {
 
     // Convert to UnsafeRow
     val inputUnsafeRow = internalRow.asInstanceOf[UnsafeRow]
@@ -134,10 +136,13 @@ class WindowComputer(sqlConfig: NativeSparkConfig,
     // TODO: Set header version and size
     val versionHeaderBytes = ByteBuffer.allocate(2)
     val sizeHeaderBytes = ByteBuffer.allocate(4)
-    val appendHeaderBytes = ByteBuffer.allocate(headerSize + inputRowSize).put(versionHeaderBytes).put(sizeHeaderBytes).put(inputBaseObject).array()
+    val appendHeaderBytes =
+      ByteBuffer.allocate(headerSize + inputRowSize)
+      .put(versionHeaderBytes).put(sizeHeaderBytes).put(inputBaseObject).array()
 
     // Call native method to compute
-    val outputFesqlRow  = CoreAPI.UnsafeWindowProject(fn, key, appendHeaderBytes, inputRowSize, true, appendSlices, window)
+    val outputFesqlRow  =
+      CoreAPI.UnsafeWindowProject(fn, key, appendHeaderBytes, inputRowSize, true, appendSlices, window)
 
     // Create output UnsafeRow
     val outputColumnSize = outputSchema.size

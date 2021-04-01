@@ -62,7 +62,7 @@ object ConstProjectPlan {
     })
 
     // Use Spark DataFrame to select columns
-    val result = ctx.getSparkSession.emptyDataFrame.select(selectColList:_*)
+    val result = ctx.getSparkSession.emptyDataFrame.select(selectColList: _*)
 
     SparkInstance.createConsideringIndex(ctx, node.GetNodeId(), result)
   }
@@ -105,7 +105,8 @@ object ConstProjectPlan {
       case HybridseDataType.kInt16 =>
         fromType match {
           case HybridseDataType.kNull => inputCol.cast(ShortType)
-          case HybridseDataType.kInt16 | HybridseDataType.kInt32 | HybridseDataType.kInt64 | HybridseDataType.kFloat | HybridseDataType.kDouble | HybridseDataType.kVarchar =>
+          case HybridseDataType.kInt16 | HybridseDataType.kInt32 | HybridseDataType.kInt64 | HybridseDataType.kFloat
+               | HybridseDataType.kDouble | HybridseDataType.kVarchar =>
             inputCol.cast(ShortType)
           case HybridseDataType.kBool => inputCol.cast(ShortType)
           case HybridseDataType.kTimestamp => inputCol.cast(ShortType).multiply(1000).cast(ShortType)
@@ -117,7 +118,8 @@ object ConstProjectPlan {
       case HybridseDataType.kInt32 =>
         fromType match {
           case HybridseDataType.kNull => inputCol.cast(IntegerType)
-          case HybridseDataType.kInt16 | HybridseDataType.kInt32 | HybridseDataType.kInt64 | HybridseDataType.kFloat | HybridseDataType.kDouble | HybridseDataType.kVarchar =>
+          case HybridseDataType.kInt16 | HybridseDataType.kInt32 | HybridseDataType.kInt64 | HybridseDataType.kFloat
+               | HybridseDataType.kDouble | HybridseDataType.kVarchar =>
             inputCol.cast(IntegerType)
           case HybridseDataType.kBool => inputCol.cast(IntegerType)
           // Spark timestamp to long returns seconds, which need to multiply 1000 to be millis seconds
@@ -130,7 +132,8 @@ object ConstProjectPlan {
       case HybridseDataType.kInt64 =>
         fromType match {
           case HybridseDataType.kNull => inputCol.cast(LongType)
-          case HybridseDataType.kInt16 | HybridseDataType.kInt32 | HybridseDataType.kInt64 | HybridseDataType.kFloat | HybridseDataType.kDouble | HybridseDataType.kVarchar =>
+          case HybridseDataType.kInt16 | HybridseDataType.kInt32 | HybridseDataType.kInt64 | HybridseDataType.kFloat
+               | HybridseDataType.kDouble | HybridseDataType.kVarchar =>
             inputCol.cast(LongType)
           case HybridseDataType.kBool => inputCol.cast(LongType)
           case HybridseDataType.kTimestamp => inputCol.cast(LongType).multiply(1000)
@@ -142,7 +145,8 @@ object ConstProjectPlan {
       case HybridseDataType.kFloat =>
         fromType match {
           case HybridseDataType.kNull => inputCol.cast(FloatType)
-          case HybridseDataType.kInt16 | HybridseDataType.kInt32 | HybridseDataType.kInt64 | HybridseDataType.kFloat | HybridseDataType.kDouble | HybridseDataType.kVarchar =>
+          case HybridseDataType.kInt16 | HybridseDataType.kInt32 | HybridseDataType.kInt64 | HybridseDataType.kFloat
+               | HybridseDataType.kDouble | HybridseDataType.kVarchar =>
             inputCol.cast(FloatType)
           case HybridseDataType.kBool => inputCol.cast(FloatType)
           case HybridseDataType.kTimestamp => inputCol.cast(FloatType).multiply(1000)
@@ -154,7 +158,8 @@ object ConstProjectPlan {
       case HybridseDataType.kDouble =>
         fromType match {
           case HybridseDataType.kNull => inputCol.cast(DoubleType)
-          case HybridseDataType.kInt16 | HybridseDataType.kInt32 | HybridseDataType.kInt64 | HybridseDataType.kFloat | HybridseDataType.kDouble | HybridseDataType.kVarchar =>
+          case HybridseDataType.kInt16 | HybridseDataType.kInt32 | HybridseDataType.kInt64 | HybridseDataType.kFloat
+               | HybridseDataType.kDouble | HybridseDataType.kVarchar =>
             inputCol.cast(DoubleType)
           case HybridseDataType.kBool => inputCol.cast(DoubleType)
           case HybridseDataType.kTimestamp => inputCol.cast(DoubleType).multiply(1000)
@@ -184,7 +189,8 @@ object ConstProjectPlan {
       case HybridseDataType.kDate =>
         fromType match {
           case HybridseDataType.kNull => inputCol.cast(DateType)
-          case HybridseDataType.kInt16 | HybridseDataType.kInt32 | HybridseDataType.kInt64 | HybridseDataType.kFloat | HybridseDataType.kDouble =>
+          case HybridseDataType.kInt16 | HybridseDataType.kInt32 | HybridseDataType.kInt64 | HybridseDataType.kFloat
+               | HybridseDataType.kDouble =>
             inputCol.cast(TimestampType).cast(DateType)
           case HybridseDataType.kBool => inputCol.cast(TimestampType).cast(DateType)
           case HybridseDataType.kTimestamp => inputCol.cast(DateType)
@@ -194,11 +200,12 @@ object ConstProjectPlan {
             s"HybridSE type from $fromType to $targetType is not supported")
         }
 
-      case HybridseDataType.kTimestamp =>  // TODO: May set timezone if it is different from database
+      case HybridseDataType.kTimestamp => // TODO: May set timezone if it is different from database
         fromType match {
           case HybridseDataType.kNull =>
             inputCol.cast(TimestampType)
-          case HybridseDataType.kInt16 | HybridseDataType.kInt32 | HybridseDataType.kInt64 | HybridseDataType.kFloat | HybridseDataType.kDouble =>
+          case HybridseDataType.kInt16 | HybridseDataType.kInt32 | HybridseDataType.kInt64 | HybridseDataType.kFloat
+               | HybridseDataType.kDouble =>
             when(inputCol >= 0, inputCol.divide(1000)).otherwise(null).cast(TimestampType)
           case HybridseDataType.kBool =>
             inputCol.cast(LongType).divide(1000).cast(TimestampType)
@@ -212,7 +219,8 @@ object ConstProjectPlan {
       case HybridseDataType.kVarchar =>
         fromType match {
           case HybridseDataType.kNull => inputCol.cast(StringType)
-          case HybridseDataType.kInt16 | HybridseDataType.kInt32 | HybridseDataType.kInt64 | HybridseDataType.kFloat | HybridseDataType.kDouble =>
+          case HybridseDataType.kInt16 | HybridseDataType.kInt32 | HybridseDataType.kInt64 | HybridseDataType.kFloat
+               | HybridseDataType.kDouble =>
             inputCol.cast(StringType)
           case HybridseDataType.kBool => inputCol.cast(StringType)
           case HybridseDataType.kTimestamp => inputCol.cast(StringType)
