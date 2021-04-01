@@ -1,8 +1,9 @@
 
-![logo](./images/NativeSpark.png)
+<div align=center>![logo](./images/NativeSpark.png)</div>
 
-- [**Slack Channel**](https://hybridsql-ws.slack.com/archives/C01R7L5SXPW)
-- [**Discussions**](https://github.com/4paradigm/NativeSpark/discussions)
+* [**Slack Channel**](https://hybridsql-ws.slack.com/archives/C01R7L5SXPW)
+* [**Discussions**](https://github.com/4paradigm/NativeSpark/discussions)
+* [**README中文**](./README-CN.md)
 
 ## 介绍
 
@@ -52,64 +53,71 @@ NativeSpark有什么特点？
 
 ## 快速开始
 
-下载预编译NativeSpark发行版。
+### 使用Docker镜像
+
+运行官方的NativeSpark容器镜像。
 
 ```bash
-wget https://drive.google.com/file/d/1IzQbm0sdYe9vlvW8d4_SZTJkBMB7r5jm/view?usp=sharing
-
-tar xzvf ./native-spark-3.0.0-bin-hadoop2.7.tar.gz
+docker run -it ghcr.io/4paradigm/nativespark bash
 ```
 
-使用NativeSpark运行测试用例，用法与标准Spark应用一致。
+直接执行Spark命令即可，默认使用NativeSpark进行SQL优化加速。
 
 ```bash
+$SPARK_HOME/bin/spark-submit \
+  --master local \
+  --class org.apache.spark.examples.sql.SparkSQLExample \
+  $SPARK_HOME/examples/jars/spark-examples*.jar
+```
+
+### 使用ativeSpark发行版
+
+从[Releases页面](https://github.com/4paradigm/NativeSpark/releases)下载预编译包，解压后可执行Spark命令。
+
+```bash
+tar xzvf ./native-spark-3.0.0-bin-hadoop2.7.tar.gz
+
 export SPARK_HOME=`pwd`/native-spark-3.0.0-bin-hadoop2.7/
 
-${SPARK_HOME}/bin/spark-submit \
-  --master=local \
-  --class org.apache.spark.examples.SparkPi \
-  ${SPARK_HOME}/lib/spark-examples*.jar
+$SPARK_HOME/bin/spark-submit \
+  --master local \
+  --class org.apache.spark.examples.sql.SparkSQLExample \
+  $SPARK_HOME/examples/jars/spark-examples*.jar
 ```
 
 ## 性能测试
 
-NativeSpark在AI计算场景上比开源Spark有明显的性能提升，性能对比结果如下。
+NativeSpark在AI计算场景上比开源Spark有明显的性能提升，性能测试结果如下。
 
 ![Benchmark](./images/native_spark_benchmark.jpeg)
 
-本地亦可进行性能测试复现结果，步骤如下。
-
-1.首先在官网下载最新版Spark包 <https://spark.apache.org/downloads.html> 。
-
-2.然后下载Benchmark测试脚本和数据。 
+本地可进行性能测试复现结果，步骤如下。
 
 ```bash
-wget https://drive.google.com/file/d/15fKq6dE4djEkt7ZiPetZSKBkvN0fTR35/view?usp=sharing
+docker run -it ghcr.io/4paradigm/nativespark bash
 
-tar xzvf ./benchmark_native_spark.tar.gz
+git clone https://github.com/4paradigm/NativeSpark.git 
+cd ./NativeSpark/benchmark/taxi_tour_multiple_window/
 
-cd ./benchmark_native_spark/
-```
+wget http://103.3.60.66:8001/nativespark_resources/taxi_tour_parquet.tar.gz
+tar xzvf ./taxi_tour_parquet.tar.gz
 
-3.最后在本地或Yarn集群执行相同任务比较运行时间和性能。
+export SPARK_HOME=/spark-3.0.0-bin-hadoop2.7/
+./submit_spark_job.sh
 
-```bash
-# export SPARK_HOME to open-source Spark
-./run_spark.sh
-
-# export SPARK_HOME to LLVM-based Native Spark Distribution
-./run_spark.sh
+export SPARK_HOME=/spark-3.0.0-bin-nativespark/
+./submit_spark_job.sh
 ```
 
 ## 项目贡献
 
 从源码编译native-spark模块。
 
-| 操作系统 |	编译命令 |
+| 操作系统 | 编译命令 |
 | ------- | ------- |
-| Linux	  | mvn clean package -DskipTests=true |
-| MacOS	  | mvn clean package -DskipTests=true -Dos=mac_os |
-| All in one | mvn clean package -DskipTests=true -Dos=all_in_one |
+| Linux	  | mvn clean package|
+| MacOS   | mvn clean package -Pmacos |
+| All in one | mvn clean package -Pallinone |
 
 从源码编译NativeSpark发行版。
 
@@ -118,8 +126,10 @@ git clone --recurse-submodules git@github.com:4paradigm/NativeSpark.git
 
 cd ./spark/
 
-./dev/make-distribution.sh --name native-spark --pip --tgz -Phadoop-2.7 -Pyarn
+./dev/make-distribution.sh --name nativespark --pip --tgz -Phadoop-2.7 -Pyarn
 ```
+
+详细介绍参考[NativeSpark官方文档](https://docs.fedb.io/nativespark)。
 
 ## 未来规划
 
@@ -148,5 +158,4 @@ NativeSpark目前兼容Spark应用生态，未来将与更多开源系统对接�
 
 ## 许可证
 
-Apache License 2.0
-
+[Apache License 2.0](./LICENSE)
