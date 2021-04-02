@@ -136,7 +136,7 @@ cd ../spark/
 ./dev/make-distribution.sh --name nativespark --pip --tgz -Phadoop-2.7 -Pyarn
 ```
 
-更多介绍请参考[NativeSpark官方文档](https://docs.fedb.io/nativespark)。
+更多介绍请参考[NativeSpark官方中文文档](https://docs.fedb.io/v/zh-hans/nativespark)。
 
 ## 未来规划
 
