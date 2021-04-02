@@ -56,8 +56,8 @@ object JoinPlan {
     val inputSchemaSlices = HybridseUtil.getOutputSchemaSlices(node)
 
     val hasOrderby =
-      (node.join.right_sort != null) && (node.join.right_sort.orders != null)
-    && (node.join.right_sort.orders.order_by != null)
+      ((node.join.right_sort != null) && (node.join.right_sort.orders != null)
+    && (node.join.right_sort.orders.order_by != null))
 
     // Check if we can use native last join
     val supportNativeLastJoin = SparkUtil.supportNativeLastJoin(joinType, hasOrderby)
