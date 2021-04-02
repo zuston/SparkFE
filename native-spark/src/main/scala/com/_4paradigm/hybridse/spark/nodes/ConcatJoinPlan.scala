@@ -38,7 +38,8 @@ object ConcatJoinPlan {
 
     val indexName = ctx.getIndexInfo(node.GetNodeId()).indexColumnName
 
-    // Note that this is exception to use "getDfWithIndex" instead of "getSparkDfConsideringIndex" because ConcatJoin has not index flag but request input dataframe with index
+    // Note that this is exception to use "getDfWithIndex" instead of "getSparkDfConsideringIndex"
+    // because ConcatJoin has not index flag but request input dataframe with index
     val leftDf: DataFrame = left.getDfWithIndex
     val rightDf: DataFrame = right.getDfWithIndex
 

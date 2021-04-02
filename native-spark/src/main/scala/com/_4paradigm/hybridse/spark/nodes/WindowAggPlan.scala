@@ -61,7 +61,8 @@ object WindowAggPlan {
       }
 
       val outputSchema = if (keepIndexColumn) {
-        HybridseUtil.getSparkSchema(node.GetOutputSchema()).add(ctx.getIndexInfo(node.GetNodeId()).indexColumnName, LongType)
+        HybridseUtil.getSparkSchema(node.GetOutputSchema())
+          .add(ctx.getIndexInfo(node.GetNodeId()).indexColumnName, LongType)
       } else {
         HybridseUtil.getSparkSchema(node.GetOutputSchema())
       }
@@ -74,7 +75,8 @@ object WindowAggPlan {
   }
 
 
-  def genDefault(ctx: PlanContext, node: PhysicalWindowAggrerationNode, input: SparkInstance, keepIndexColumn: Boolean): RDD[Row] = {
+  def genDefault(ctx: PlanContext,
+                 node: PhysicalWindowAggrerationNode, input: SparkInstance, keepIndexColumn: Boolean): RDD[Row] = {
     val config = ctx.getConf
     val windowAggConfig = createWindowAggConfig(ctx, node, keepIndexColumn)
 
@@ -106,7 +108,9 @@ object WindowAggPlan {
 
   }
 
-  def unsafeGenDefault(ctx: PlanContext, node: PhysicalWindowAggrerationNode, input: SparkInstance, keepIndexColumn: Boolean): SparkInstance = {
+  def unsafeGenDefault(ctx: PlanContext,
+                       node: PhysicalWindowAggrerationNode,
+                       input: SparkInstance, keepIndexColumn: Boolean): SparkInstance = {
     val config = ctx.getConf
     val windowAggConfig = createWindowAggConfig(ctx, node, keepIndexColumn)
 
@@ -149,9 +153,12 @@ object WindowAggPlan {
 
     val sparkSessionClass = Class.forName("org.apache.spark.sql.SparkSession")
     val internalCreateDataFrameMethod = sparkSessionClass
-      .getDeclaredMethod(s"internalCreateDataFrame", classOf[RDD[InternalRow]], classOf[StructType], classOf[Boolean])
+      .getDeclaredMethod(s"internalCreateDataFrame",
+        classOf[RDD[InternalRow]],
+        classOf[StructType], classOf[Boolean])
 
-    val outputDf =  internalCreateDataFrameMethod.invoke(ctx.getSparkSession, outputInternalRowRdd, outputSchema, false: java.lang.Boolean)
+    val outputDf =  internalCreateDataFrameMethod.invoke(ctx.getSparkSession,
+      outputInternalRowRdd, outputSchema, false: java.lang.Boolean)
       .asInstanceOf[DataFrame]
 
     SparkInstance.fromDataFrame(outputDf)
@@ -159,10 +166,12 @@ object WindowAggPlan {
 
   }
 
-  def genWithUnion(ctx: PlanContext, node: PhysicalWindowAggrerationNode, input: SparkInstance, keepIndexColumn: Boolean): RDD[Row] = {
+  def genWithUnion(ctx: PlanContext, node: PhysicalWindowAggrerationNode,
+                   input: SparkInstance, keepIndexColumn: Boolean): RDD[Row] = {
     val config = ctx.getConf
     val flagColName = "__HybridSE_WINDOW_UNION_FLAG__" + System.currentTimeMillis()
-    val union = doUnionTables(ctx, node, input.getDfConsideringIndex(ctx, node.GetNodeId()), flagColName, keepIndexColumn)
+    val union = doUnionTables(ctx, node, input.getDfConsideringIndex(ctx, node.GetNodeId()),
+      flagColName, keepIndexColumn)
     val windowAggConfig = createWindowAggConfig(ctx, node, keepIndexColumn)
     val inputDf =  if (config.skewMode == NativeSparkConfig.SKEW) {
       improveSkew(ctx, node, union, config, windowAggConfig)
@@ -198,9 +207,11 @@ object WindowAggPlan {
 
       if (keepIndexColumn) {
         // Notice that input df may has index column, check in another way
-        if (!SparkUtil.checkSchemaIgnoreNullable(subDf.schema.add(ctx.getIndexInfo(node.GetNodeId()).indexColumnName, LongType), source.schema)) {
+        if (!SparkUtil.checkSchemaIgnoreNullable(subDf
+          .schema.add(ctx.getIndexInfo(node.GetNodeId()).indexColumnName, LongType), source.schema)) {
           throw new HybridSEException("Keep index column, {$i}th Window union with inconsistent schema:\n" +
-            s"Expect ${source.schema}\nGet ${subDf.schema.add(ctx.getIndexInfo(node.GetNodeId()).indexColumnName, LongType)}")
+            s"Expect ${source.schema}\nGet ${subDf
+              .schema.add(ctx.getIndexInfo(node.GetNodeId()).indexColumnName, LongType)}")
         }
       } else {
         if (!SparkUtil.checkSchemaIgnoreNullable(subDf.schema, source.schema)) {
@@ -211,7 +222,8 @@ object WindowAggPlan {
 
       if (keepIndexColumn) {
         // Add one more placeholder column for sub tables if main table has index column
-        subDf.withColumn(flagColumnName + "_index_column_placeholder", functions.lit(0L)).withColumn(flagColumnName, functions.lit(false))
+        subDf.withColumn(flagColumnName + "_index_column_placeholder",
+          functions.lit(0L)).withColumn(flagColumnName, functions.lit(false))
       } else {
         // Only add the union boolean column
         subDf.withColumn(flagColumnName, functions.lit(false))

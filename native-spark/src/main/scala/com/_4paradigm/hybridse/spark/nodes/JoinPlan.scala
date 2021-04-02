@@ -38,7 +38,8 @@ object JoinPlan {
 
   def gen(ctx: PlanContext, node: PhysicalJoinNode, left: SparkInstance, right: SparkInstance): SparkInstance = {
     val joinType = node.join().join_type()
-    if (joinType != JoinType.kJoinTypeLeft && joinType != JoinType.kJoinTypeLast && joinType != JoinType.kJoinTypeConcat) {
+    if (joinType != JoinType.kJoinTypeLeft &&
+      joinType != JoinType.kJoinTypeLast && joinType != JoinType.kJoinTypeConcat) {
       throw new HybridSEException(s"Join type $joinType not supported")
     }
 
@@ -54,7 +55,9 @@ object JoinPlan {
 
     val inputSchemaSlices = HybridseUtil.getOutputSchemaSlices(node)
 
-    val hasOrderby = (node.join.right_sort != null) && (node.join.right_sort.orders != null) && (node.join.right_sort.orders.order_by != null)
+    val hasOrderby =
+      ((node.join.right_sort != null) && (node.join.right_sort.orders != null)
+    && (node.join.right_sort.orders.order_by != null))
 
     // Check if we can use native last join
     val supportNativeLastJoin = SparkUtil.supportNativeLastJoin(joinType, hasOrderby)

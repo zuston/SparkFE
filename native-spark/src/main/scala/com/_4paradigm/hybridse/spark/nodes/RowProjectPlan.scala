@@ -46,7 +46,8 @@ object RowProjectPlan {
     val keepIndexColumn = SparkInstance.keepIndexColumn(ctx, node.GetNodeId())
 
     val outputSchema = if (keepIndexColumn) {
-      HybridseUtil.getSparkSchema(node.GetOutputSchema()).add(ctx.getIndexInfo(node.GetNodeId()).indexColumnName, LongType)
+      HybridseUtil.getSparkSchema(node.GetOutputSchema())
+        .add(ctx.getIndexInfo(node.GetNodeId()).indexColumnName, LongType)
     } else {
       HybridseUtil.getSparkSchema(node.GetOutputSchema())
     }
@@ -86,7 +87,8 @@ object RowProjectPlan {
 
   def projectIter(inputIter: Iterator[Row], jit: HybridSEJITWrapper, config: ProjectConfig): Iterator[Row] = {
     // reusable output row inst
-    val outputFields = if (config.keepIndexColumn) config.outputSchemaSlices.map(_.size).sum + 1 else config.outputSchemaSlices.map(_.size).sum
+    val outputFields = if (config.keepIndexColumn) config.outputSchemaSlices.map(_.size).sum + 1
+    else config.outputSchemaSlices.map(_.size).sum
     val outputArr = Array.fill[Any](outputFields)(null)
 
     val fn = jit.FindFunction(config.functionName)

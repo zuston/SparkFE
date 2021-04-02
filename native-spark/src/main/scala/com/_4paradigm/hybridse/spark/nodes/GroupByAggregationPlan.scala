@@ -59,7 +59,8 @@ object GroupByAggregationPlan {
     val outputSchemaSlices = HybridseUtil.getOutputSchemaSlices(node)
 
     val outputSchema = if (keepIndexColumn) {
-      HybridseUtil.getSparkSchema(node.GetOutputSchema()).add(ctx.getIndexInfo(node.GetNodeId()).indexColumnName, LongType)
+      HybridseUtil.getSparkSchema(node.GetOutputSchema())
+        .add(ctx.getIndexInfo(node.GetNodeId()).indexColumnName, LongType)
     } else {
       HybridseUtil.getSparkSchema(node.GetOutputSchema())
     }
@@ -96,7 +97,9 @@ object GroupByAggregationPlan {
 
         val inputHybridseSchema = HybridseUtil.getHybridseSchema(projectConfig.inputSchema)
 
-        val outputFields = if (projectConfig.keepIndexColumn) projectConfig.outputSchemaSlices.map(_.size).sum + 1 else projectConfig.outputSchemaSlices.map(_.size).sum
+        val outputFields =
+          if (projectConfig.keepIndexColumn) projectConfig.outputSchemaSlices.map(_.size).sum + 1
+          else projectConfig.outputSchemaSlices.map(_.size).sum
 
         // Init first groupby interface
         var groupbyInterface = new GroupbyInterface(inputHybridseSchema)

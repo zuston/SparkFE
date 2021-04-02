@@ -95,7 +95,8 @@ object SparkColumnUtil {
       case ExprType.kExprPrimary =>
         val constNode = ConstNode.CastFrom(expr)
         constNode.GetDataType() match {
-          case HybridseDataType.kInt16 | HybridseDataType.kInt32 | HybridseDataType.kInt64 => lit(constNode.GetAsInt64())
+          case HybridseDataType.kInt16 | HybridseDataType.kInt32 | HybridseDataType.kInt64 =>
+            lit(constNode.GetAsInt64())
           case HybridseDataType.kFloat | HybridseDataType.kDouble => lit(constNode.GetAsDouble())
           case HybridseDataType.kVarchar => lit(constNode.GetAsString())
           case _ => throw new UnsupportedHybridSEException(s"Fail to support const node ${constNode.GetExprString()}")

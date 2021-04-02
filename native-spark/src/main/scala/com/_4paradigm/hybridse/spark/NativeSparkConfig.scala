@@ -99,10 +99,12 @@ class NativeSparkConfig extends Serializable {
   @ConfigOption(name="nativespark.window.sampleLimit", doc="Maximum sample to dump for each partition")
   var windowSampleLimit = 10
 
-  @ConfigOption(name="nativespark.addIndexColumn.method", doc="The method to add index column(zipWithUniqueId, zipWithIndex, monotonicallyIncreasingId")
+  @ConfigOption(name="nativespark.addIndexColumn.method",
+    doc="The method to add index column(zipWithUniqueId, zipWithIndex, monotonicallyIncreasingId")
   var addIndexColumnMethod = "monotonicallyIncreasingId"
 
-  @ConfigOption(name="nativespark.concatjoin.jointype", doc="The join type type for concat join(innerjoin, leftjoin, lastjoin)")
+  @ConfigOption(name="nativespark.concatjoin.jointype",
+    doc="The join type type for concat join(innerjoin, leftjoin, lastjoin)")
   var concatJoinJoinType = "inner"
 
   @ConfigOption(name="nativespark.physical.plan.graphviz.path", doc="The path of physical plan graphviz image")
