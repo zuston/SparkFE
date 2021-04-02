@@ -146,9 +146,7 @@ For more information, please refer to [NativeSpark Documentation](https://docs.f
 
 NativeSpark is compatible with most SparkSQL applications now. In the future, we may perfect the compatibility for ANSI SQL and lower the migration cost for developers.
 
-
 * [2021 H1&H2] Support more `Window` types and `Where`, `GroupBy` with complex expressions.
-
 * [2021 H1&H2] Support more SQL syntax and UDF/UDAF functions for AI scenarios.
 
 ### Performance Improvement
