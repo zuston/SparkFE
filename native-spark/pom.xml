@@ -554,5 +554,13 @@
 		</repository>
 	</distributionManagement>
 
+	<repositories>
+		<repository>
+			<id>github</id>
+			<name>4Paradigm-maven-repository</name>
+			<url>http://103.3.60.66:8001/</url>
+		</repository>
+	</repositories>
+
 </project>
 
