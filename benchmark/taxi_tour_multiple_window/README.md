@@ -5,7 +5,7 @@ This uses the public taxi tour dataset and simple SQL query with multiple over w
 Download and extract the test dataset.
 
 ```
-wget http://103.3.60.66:8001/nativespark_resources/taxi_tour_parquet.tar.gz
+wget http://103.3.60.66:8001/sparkfe_resources/taxi_tour_parquet.tar.gz
 tar xzvf ./taxi_tour_parquet.tar.gz
 ```
 
