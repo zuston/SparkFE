@@ -2,4 +2,4 @@
 
 set -e -x
 
-docker build -t ghcr.io/4paradigm/nativespark .
+docker build -t ghcr.io/4paradigm/sparkfe .
