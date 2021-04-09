@@ -26,5 +26,5 @@ select
     min(trip_duration) over w2 as pc_min_pl3,
     avg(trip_duration) over w2 as pc_avg_pl3
 from t1
-window w as (partition by vendor_id order by pickup_datetime ROWS BETWEEN 10000 PRECEDING AND CURRENT ROW),
-       w2 as (partition by passenger_count order by pickup_datetime ROWS BETWEEN 10000 PRECEDING AND CURRENT ROW)
+window w as (partition by vendor_id order by pickup_datetime ROWS BETWEEN 1000 PRECEDING AND CURRENT ROW),
+       w2 as (partition by passenger_count order by pickup_datetime ROWS BETWEEN 1000 PRECEDING AND CURRENT ROW)

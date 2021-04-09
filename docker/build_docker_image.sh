@@ -2,4 +2,5 @@
 
 set -e -x
 
-docker build -t ghcr.io/4paradigm/sparkfe .
+docker build -t 4pdosc/sparkfe .
+

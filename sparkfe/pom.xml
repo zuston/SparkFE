@@ -523,10 +523,11 @@
 		</repository>
 	</distributionManagement>
 
+	<!-- 4paradigm -->
 	<repositories>
 		<repository>
-			<id>github</id>
-			<name>4Paradigm-maven-repository</name>
+			<id>4paradigm-github</id>
+			<name>4Paradigm-github-maven-repository</name>
 			<url>http://103.3.60.66:8001/</url>
 		</repository>
 	</repositories>
