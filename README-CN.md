@@ -89,7 +89,7 @@ $SPARK_HOME/bin/spark-submit \
 
 SparkFE在AI计算场景上比开源Spark有明显的性能提升，部分性能测试结果如下。
 
-![Benchmark](./images/sparkfe_benchmark.jpeg)
+![Benchmark](./images/sparkfe_benchmark.png)
 
 本地可进行性能测试复现结果，步骤如下。
 

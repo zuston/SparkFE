@@ -91,7 +91,7 @@ $SPARK_HOME/bin/spark-submit \
 
 SparkFE has significant performance improvement in most of the AI scenarios. Here are part of the benchmark results. 
 
-![Benchmark](./images/sparkfe_benchmark.jpeg)
+![Benchmark](./images/sparkfe_benchmark.png)
 
 You can verify the results in your environment with the following steps.
 
