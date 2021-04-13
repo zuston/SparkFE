@@ -18,7 +18,7 @@ package com._4paradigm.hybridsql.spark.nodes.window
 
 import java.nio.ByteBuffer
 
-import com._4paradigm.hybridse.vm.{CoreAPI, HybridSEJITWrapper, WindowInterface}
+import com._4paradigm.hybridse.vm.{CoreAPI, HybridSeJitWrapper, WindowInterface}
 import com._4paradigm.hybridsql.spark.nodes.WindowAggPlan.WindowAggConfig
 import com._4paradigm.hybridsql.spark.utils.{HybridseUtil, SparkRowUtil}
 import com._4paradigm.hybridsql.spark.{SparkRowCodec, SparkFeConfig}
@@ -38,7 +38,7 @@ import scala.collection.mutable
   */
 class WindowComputer(sqlConfig: SparkFeConfig,
                      config: WindowAggConfig,
-                     jit: HybridSEJITWrapper,
+                     jit: HybridSeJitWrapper,
                      keepIndexColumn: Boolean) {
 
   private val logger = LoggerFactory.getLogger(this.getClass)

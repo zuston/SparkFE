@@ -19,8 +19,8 @@ package com._4paradigm.hybridsql.spark.nodes.window
 import java.io._
 
 import com._4paradigm.hybridse.codec.{Row => NativeRow}
-import com._4paradigm.hybridse.common.JITManager
-import com._4paradigm.hybridse.vm.{CoreAPI, HybridSEJITWrapper}
+import com._4paradigm.hybridse.sdk.JitManager
+import com._4paradigm.hybridse.vm.{CoreAPI, HybridSeJitWrapper}
 import com._4paradigm.hybridsql.spark.SparkFeConfig
 import com._4paradigm.hybridsql.spark.nodes.WindowAggPlan.WindowAggConfig
 import org.apache.hadoop.conf.Configuration
@@ -34,7 +34,7 @@ class WindowSampleSupport(fs: FileSystem,
                           partitionIndex: Int,
                           config: WindowAggConfig,
                           sqlConfig: SparkFeConfig,
-                          jit: HybridSEJITWrapper) extends WindowHook {
+                          jit: HybridSeJitWrapper) extends WindowHook {
 
   private val logger = LoggerFactory.getLogger(this.getClass)
 
@@ -203,8 +203,8 @@ object WindowSampleSupport {
 
     private val jit = {
       val buffer = config.moduleNoneBroadcast.getBuffer
-      JITManager.initJITModule(config.moduleTag, buffer)
-      JITManager.getJIT(config.moduleTag)
+      JitManager.initJITModule(config.moduleTag, buffer)
+      JitManager.getJIT(config.moduleTag)
     }
 
     // TODO: Check if we need to support keep index column here

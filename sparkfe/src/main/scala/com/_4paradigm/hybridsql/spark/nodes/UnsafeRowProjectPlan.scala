@@ -2,7 +2,7 @@ package com._4paradigm.hybridsql.spark.nodes
 
 import java.nio.ByteBuffer
 
-import com._4paradigm.hybridse.common.{JITManager, SerializableByteBuffer}
+import com._4paradigm.hybridse.sdk.{JitManager, SerializableByteBuffer}
 import com._4paradigm.hybridse.vm.{CoreAPI, PhysicalTableProjectNode}
 import com._4paradigm.hybridsql.spark.utils.HybridseUtil
 import com._4paradigm.hybridsql.spark.{PlanContext, SparkInstance}
@@ -47,8 +47,8 @@ object UnsafeRowProjectPlan {
       // ensure worker native
       val tag = projectConfig.moduleTag
       val buffer = projectConfig.moduleBroadcast.getBuffer
-      JITManager.initJITModule(tag, buffer)
-      val jit = JITManager.getJIT(tag)
+      JitManager.initJITModule(tag, buffer)
+      val jit = JitManager.getJIT(tag)
       val fn = jit.FindFunction(projectConfig.functionName)
 
       partitionIter.map(internalRow => {

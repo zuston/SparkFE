@@ -16,7 +16,7 @@
 
 package com._4paradigm.hybridsql.spark.nodes
 
-import com._4paradigm.hybridse.common.UnsupportedHybridSEException
+import com._4paradigm.hybridse.sdk.UnsupportedHybridSeException
 import com._4paradigm.hybridse.node.{CastExprNode, ConstNode, ExprNode, ExprType, DataType => HybridseDataType}
 import com._4paradigm.hybridse.vm.{CoreAPI, PhysicalSimpleProjectNode}
 import com._4paradigm.hybridsql.spark.utils.{HybridseUtil, SparkColumnUtil}
@@ -111,7 +111,7 @@ object SimpleProjectPlan {
           childCol, childType, castType)
         castColumn -> castType
 
-      case _ => throw new UnsupportedHybridSEException(
+      case _ => throw new UnsupportedHybridSeException(
         s"Simple project do not support expression type ${expr.GetExprType}")
     }
   }

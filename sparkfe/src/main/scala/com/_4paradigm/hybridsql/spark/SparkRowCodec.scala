@@ -19,7 +19,7 @@ package com._4paradigm.hybridsql.spark
 import java.sql.{Date, Timestamp}
 
 import com._4paradigm.hybridse.codec.{RowBuilder, RowView, Row => NativeRow}
-import com._4paradigm.hybridse.common.HybridSEException
+import com._4paradigm.hybridse.sdk.HybridSeException
 import com._4paradigm.hybridse.vm.CoreAPI
 import com._4paradigm.hybridsql.spark.utils.HybridseUtil
 import org.apache.spark.sql.Row
@@ -156,7 +156,7 @@ class SparkRowCodec(sliceSchemas: Array[StructType]) {
     val schema = sliceSchemas(sliceIndex)
 
     if (!rowView.Reset(nativeRow.buf(sliceIndex), nativeRow.size(sliceIndex))) {
-      throw new HybridSEException("Fail to setup row builder, maybe row buf is corrupted")
+      throw new HybridSeException("Fail to setup row builder, maybe row buf is corrupted")
     }
 
     val fieldNum = schema.size

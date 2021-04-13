@@ -18,7 +18,7 @@ package com._4paradigm.hybridsql.spark.nodes
 
 import java.util
 
-import com._4paradigm.hybridse.common.{HybridSEException, JITManager, SerializableByteBuffer}
+import com._4paradigm.hybridse.sdk.{HybridSeException, JitManager, SerializableByteBuffer}
 import com._4paradigm.hybridse.node.FrameType
 import com._4paradigm.hybridse.utils.SkewUtils
 import com._4paradigm.hybridse.vm.PhysicalWindowAggrerationNode
@@ -209,13 +209,13 @@ object WindowAggPlan {
         // Notice that input df may has index column, check in another way
         if (!SparkUtil.checkSchemaIgnoreNullable(subDf
           .schema.add(ctx.getIndexInfo(node.GetNodeId()).indexColumnName, LongType), source.schema)) {
-          throw new HybridSEException("Keep index column, {$i}th Window union with inconsistent schema:\n" +
+          throw new HybridSeException("Keep index column, {$i}th Window union with inconsistent schema:\n" +
             s"Expect ${source.schema}\nGet ${subDf
               .schema.add(ctx.getIndexInfo(node.GetNodeId()).indexColumnName, LongType)}")
         }
       } else {
         if (!SparkUtil.checkSchemaIgnoreNullable(subDf.schema, source.schema)) {
-          throw new HybridSEException("{$i}th Window union with inconsistent schema:\n" +
+          throw new HybridSeException("{$i}th Window union with inconsistent schema:\n" +
             s"Expect ${source.schema}\nGet ${subDf.schema}")
         }
       }
@@ -254,7 +254,7 @@ object WindowAggPlan {
     // process order key
     val orders = windowOp.sort().orders().order_by()
     if (orders.GetChildNum() > 1) {
-      throw new HybridSEException("Multiple window order not supported")
+      throw new HybridSeException("Multiple window order not supported")
     }
     val orderIdx = SparkColumnUtil.resolveColumnIndex(orders.GetChild(0), node.GetProducer(0))
 
@@ -330,7 +330,7 @@ object WindowAggPlan {
       val colIdx = SparkColumnUtil.resolveColumnIndex(expr, node.GetProducer(0))
       if (colIdx < 0) {
         logger.error(s"skew dataframe: $input")
-        throw new HybridSEException("window skew colIdx is less than zero")
+        throw new HybridSeException("window skew colIdx is less than zero")
       }
       groupByCols += SparkColumnUtil.getColumnFromIndex(input, colIdx)
       keysName.add(input.schema.apply(colIdx).name)
@@ -344,7 +344,7 @@ object WindowAggPlan {
       val colIdx = SparkColumnUtil.resolveColumnIndex(expr, node.GetProducer(0))
       if (colIdx < 0) {
         logger.error(s"skew dataframe: $input")
-        throw new HybridSEException("window skew colIdx is less than zero")
+        throw new HybridSeException("window skew colIdx is less than zero")
       }
       ts = input.schema.apply(colIdx).name
       val column = SparkColumnUtil.getColumnFromIndex(input, colIdx)
@@ -450,8 +450,8 @@ object WindowAggPlan {
     // get jit in executor process
     val tag = config.moduleTag
     val buffer = config.moduleNoneBroadcast.getBuffer
-    JITManager.initJITModule(tag, buffer)
-    val jit = JITManager.getJIT(tag)
+    JitManager.initJITModule(tag, buffer)
+    val jit = JitManager.getJIT(tag)
 
     // create stateful computer
     val computer = new WindowComputer(sqlConfig, config, jit, config.keepIndexColumn)

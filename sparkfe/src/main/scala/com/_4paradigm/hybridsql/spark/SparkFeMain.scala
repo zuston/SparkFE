@@ -16,7 +16,7 @@
 
 package com._4paradigm.hybridsql.spark
 
-import com._4paradigm.hybridse.common.DDLEngine._
+import com._4paradigm.hybridse.sdk.DDLEngine._
 import com._4paradigm.hybridse.element.SparkConfig
 import com._4paradigm.hybridse.utils.SqlUtils._
 import com._4paradigm.hybridsql.spark.api.SparkFeSession

@@ -18,7 +18,7 @@ package com._4paradigm.hybridsql.spark
 
 import java.nio.ByteBuffer
 
-import com._4paradigm.hybridse.common.SerializableByteBuffer
+import com._4paradigm.hybridse.sdk.SerializableByteBuffer
 import com._4paradigm.hybridse.vm._
 import com._4paradigm.hybridsql.spark.utils.NodeIndexInfo
 import org.apache.spark.sql.catalyst.QueryPlanningTracker
