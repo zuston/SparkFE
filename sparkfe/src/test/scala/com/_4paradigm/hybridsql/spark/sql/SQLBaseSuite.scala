@@ -20,8 +20,8 @@ import java.io.{File, FileInputStream}
 import java.sql.{Date, Timestamp}
 import java.text.SimpleDateFormat
 
-import com._4paradigm.hybridse.common.JITManager
-import com._4paradigm.hybridse.sqlcase.model._
+import com._4paradigm.hybridse.sdk.JitManager
+//import com._4paradigm.hybridse.sqlcase.model._
 import com._4paradigm.hybridsql.spark.SparkTestSuite
 import com._4paradigm.hybridsql.spark.api.{SparkFeDataframe, SparkFeSession}
 import com._4paradigm.hybridsql.spark.utils.SparkUtil
@@ -37,7 +37,7 @@ import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
 import scala.reflect.ClassTag
 
-
+/* TODO: Do not use sqlcase
 class SQLBaseSuite extends SparkTestSuite {
 
   private val logger = LoggerFactory.getLogger(this.getClass)
@@ -121,7 +121,7 @@ class SQLBaseSuite extends SparkTestSuite {
         }
       }
 
-      JITManager.removeModule(sqlCase.getSql)
+      JitManager.removeModule(sqlCase.getSql)
     }
   }
 
@@ -362,3 +362,4 @@ object SQLBaseSuite {
     }
   }
 }
+*/

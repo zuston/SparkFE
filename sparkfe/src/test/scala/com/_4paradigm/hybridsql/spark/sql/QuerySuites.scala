@@ -16,7 +16,7 @@
 
 package com._4paradigm.hybridsql.spark.sql
 
-
+/* TODO: Do not use SQLBaseSuite
 class QuerySuites extends SQLBaseSuite {
   /* TODO: Do not run yaml cases now
   testCases("cases/query/fz_sql.yaml")
@@ -76,3 +76,4 @@ class QuerySuites extends SQLBaseSuite {
   // testCases("cases/query/udaf_query.yaml")
   */
 }
+*/
