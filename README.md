@@ -124,9 +124,9 @@ cd ./SparkFE/sparkfe/
 
 Build the sparkfe module from scratch.
 
-| Operating System | Compile Command | Notes |
-| ------- | ------ | ---- |
-| Linux	  | mvn clean package| Support CentOS 6, Ubuntu and other Linux distros|
+| Operating System | Compile Command | Notice |
+| ---------------- | --------------- | ------ |
+| Linux	  | mvn clean package| Support CentOS 6, Ubuntu and other Linux distros |
 | MacOS   | mvn clean package -Pmacos | Support macOS Big Sur and later versions |
 | All in one | mvn clean package -Pallinone | Support Linux and MacOS at the same time |
 
