@@ -7,7 +7,7 @@
 
 ## Introduction
 
-SparkFE is the LLVM-based and high-performance Spark native execution engine which is designed for Feature Enginnering.
+SparkFE is the LLVM-based and high-performance Spark native execution engine which is designed for feature engineering.
 
 Spark has rapidly emerged as the de facto standard for big data processing. However, it is not designed for machine learning which has more and more limitation in AI scenarios. SparkFE rewrite the execution engine in C++ and achieve more than 6x performance improvement for feature extraction. It guarantees the online-offline consistency which makes AI landing much easier. For further details, please refer to [SparkFE Documentation](https://docs.fedb.io/sparkfe).
 
@@ -17,7 +17,7 @@ Spark has rapidly emerged as the de facto standard for big data processing. Howe
 
 * **High Performance**
 
-    Based on LLVM optimization, we can get more than 6 times performance improvement in some AI scenarios. It reduces the computing time for the same applications and get lower TCO.
+    Based on LLVM optimization, we can get more than 6 times performance improvement in some AI scenarios. It reduces the computing time for the same applications and gets lower TCO.
 
 * **No Migration Cost**
 
