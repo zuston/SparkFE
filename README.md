@@ -7,35 +7,18 @@
 
 ## Introduction
 
-SparkFE is the LLVM-based and high-performance Spark native execution engine which is designed for AI Feature Enginnering.
+SparkFE is the LLVM-based and high-performance Spark native execution engine which is designed for Feature Enginnering.
+
+Spark has rapidly emerged as the de facto standard for big data processing. However, it is not designed for machine learning which has more and more limitation in AI scenarios. SparkFE rewrite the execution engine in C++ and achieve more than 6x performance improvement for feature extraction. It guarantees the online-offline consistency which makes AI landing much easier. For further details, please refer to [SparkFE Documentation](https://docs.fedb.io/sparkfe).
 
 ![Architecture](./images/sparkfe_architecture.png)
 
-## Background
-
-Why SparkFE?
-
-* Optimizing performance for Spark has been reach the bottleneck. Using C++ and LLVM to implement the native execution engine can leverage the modern CPU and GPU to achieve several times performance improvement.
-* Spark focus on general-purpose offline computing but be short of feature engineering for machine learning and generating online features. SparkFE can make up for the above defects and make AI landing easier.
-* Comparing with other native execution engine, like Intel OAP and Nvidia spark-rapids, SparkFE rewrite SQL optimization passes and use LLVM for JIT which is much more efficient and flexible.
-
-Who is SparkFE for?
-
-* Spark users. SparkFE is compatible with most of SparkSQL syntax. Spark users can use SparkFE for acceleration without any code changed.
-* Spark developer. If you are familiar with Spark source code or LLVM JIT, you can contribute to SparkFE for better performance and functionality.
-* Users who use Spark for ML/AI. SparkFE provides AI-oriented syntax extensions and high-performance feature engineering which can solve online-offline consistency problem for AI landing.
-
-Why SparkFE is fast?
-
-* SparkFE is written in C++ and based on LLVM. It will optimize and generate native binary code for each hardware architecture. It rewrites the underlying SQL compiler and expression optimization passes. There are some physical plans have no CodeGen supported in Spark however SparkFE has implemented in efficient way. SparkFE has creatively implemented the features of multiple window concurrently computing and skew computing optimization for window data. It also has better memory management which avoid the overhead of JVM garbage collection.
-
-
-What are the features of SparkFE?
+## Features
 
 * **High Performance**
 
-    Based on LLVM optimization, we can get more than six times performance improvement in some AI scenarios. It reduces the computing time for the same applications and get lower TCO.
-    
+    Based on LLVM optimization, we can get more than 6 times performance improvement in some AI scenarios. It reduces the computing time for the same applications and get lower TCO.
+
 * **No Migration Cost**
 
     Using SparkFE does not require modifying or re-compiling your SparkSQL applications. Just set the SPARK_HOME then you will reap the performance benefit of native execution engine.
@@ -51,6 +34,30 @@ What are the features of SparkFE?
 * **Upstream First** 
   
     SparkFE will be compatible with Spark 3.0 and the later versions. All the functions will be synchronized with upstream and it is able to fallback to vanilla Spark in some special scenarios.
+
+## Performance
+
+SparkFE has significant performance improvement in most of the AI scenarios. Here are part of the benchmark results. 
+
+![Benchmark](./images/sparkfe_benchmark.png)
+
+You can verify the results in your environment with the following steps.
+
+```bash
+docker run -it 4pdosc/sparkfe bash
+
+git clone https://github.com/4paradigm/SparkFE.git 
+cd ./SparkFE/benchmark/taxi_tour_multiple_window/
+
+wget http://103.3.60.66:8001/sparkfe_resources/taxi_tour_parquet.tar.gz
+tar xzvf ./taxi_tour_parquet.tar.gz
+
+export SPARK_HOME=/spark-3.0.0-bin-hadoop2.7/
+./submit_spark_job.sh
+
+export SPARK_HOME=/spark-3.0.0-bin-sparkfe/
+./submit_spark_job.sh
+```
 
 ## QuickStart
 
@@ -87,31 +94,8 @@ $SPARK_HOME/bin/spark-submit \
   $SPARK_HOME/examples/jars/spark-examples*.jar
 ```
 
-## Performance
 
-SparkFE has significant performance improvement in most of the AI scenarios. Here are part of the benchmark results. 
-
-![Benchmark](./images/sparkfe_benchmark.png)
-
-You can verify the results in your environment with the following steps.
-
-```bash
-docker run -it 4pdosc/sparkfe bash
-
-git clone https://github.com/4paradigm/SparkFE.git 
-cd ./SparkFE/benchmark/taxi_tour_multiple_window/
-
-wget http://103.3.60.66:8001/sparkfe_resources/taxi_tour_parquet.tar.gz
-tar xzvf ./taxi_tour_parquet.tar.gz
-
-export SPARK_HOME=/spark-3.0.0-bin-hadoop2.7/
-./submit_spark_job.sh
-
-export SPARK_HOME=/spark-3.0.0-bin-sparkfe/
-./submit_spark_job.sh
-```
-
-## Get Involved
+## Contribution
 
 You can use the official docker image for development.
 
@@ -137,8 +121,6 @@ cd ../spark/
 
 ./dev/make-distribution.sh --name sparkfe --pip --tgz -Phadoop-2.7 -Pyarn
 ```
-
-For more information, please refer to [SparkFE Documentation](https://docs.fedb.io/sparkfe).
 
 ## Roadmap
 
