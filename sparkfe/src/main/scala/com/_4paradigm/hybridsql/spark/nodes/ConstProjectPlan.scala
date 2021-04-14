@@ -16,7 +16,7 @@
 
 package com._4paradigm.hybridsql.spark.nodes
 
-import com._4paradigm.hybridse.common.UnsupportedHybridSEException
+import com._4paradigm.hybridse.sdk.UnsupportedHybridSeException
 import com._4paradigm.hybridse.node.{ConstNode, ExprType, DataType => HybridseDataType}
 import com._4paradigm.hybridse.vm.PhysicalConstProjectNode
 import com._4paradigm.hybridsql.spark.utils.HybridseUtil
@@ -56,7 +56,7 @@ object ConstProjectPlan {
           castSparkOutputCol(column, constNode.GetDataType(), outputColTypeList(i))
             .alias(outputColName)
 
-        case _ => throw new UnsupportedHybridSEException(
+        case _ => throw new UnsupportedHybridSeException(
           s"Should not handle non-const column for const project node")
       }
     })
@@ -90,7 +90,7 @@ object ConstProjectPlan {
       case HybridseDataType.kVarchar =>
         typedLit[String](constNode.GetAsString())
 
-      case _ => throw new UnsupportedHybridSEException(
+      case _ => throw new UnsupportedHybridSeException(
         s"Const value for HybridSE type ${constNode.GetDataType()} not supported")
     }
   }
@@ -111,7 +111,7 @@ object ConstProjectPlan {
           case HybridseDataType.kBool => inputCol.cast(ShortType)
           case HybridseDataType.kTimestamp => inputCol.cast(ShortType).multiply(1000).cast(ShortType)
           case HybridseDataType.kDate => inputCol.cast(ShortType)
-          case _ => throw new UnsupportedHybridSEException(
+          case _ => throw new UnsupportedHybridSeException(
             s"HybridSE type from $fromType to $targetType is not supported")
         }
 
@@ -125,7 +125,7 @@ object ConstProjectPlan {
           // Spark timestamp to long returns seconds, which need to multiply 1000 to be millis seconds
           case HybridseDataType.kTimestamp => inputCol.cast(IntegerType).multiply(1000)
           case HybridseDataType.kDate => inputCol.cast(IntegerType)
-          case _ => throw new UnsupportedHybridSEException(
+          case _ => throw new UnsupportedHybridSeException(
             s"HybridSE type from $fromType to $targetType is not supported")
         }
 
@@ -138,7 +138,7 @@ object ConstProjectPlan {
           case HybridseDataType.kBool => inputCol.cast(LongType)
           case HybridseDataType.kTimestamp => inputCol.cast(LongType).multiply(1000)
           case HybridseDataType.kDate => inputCol.cast(LongType)
-          case _ => throw new UnsupportedHybridSEException(
+          case _ => throw new UnsupportedHybridSeException(
             s"HybridSE type from $fromType to $targetType is not supported")
         }
 
@@ -151,7 +151,7 @@ object ConstProjectPlan {
           case HybridseDataType.kBool => inputCol.cast(FloatType)
           case HybridseDataType.kTimestamp => inputCol.cast(FloatType).multiply(1000)
           case HybridseDataType.kDate => inputCol.cast(FloatType)
-          case _ => throw new UnsupportedHybridSEException(
+          case _ => throw new UnsupportedHybridSeException(
             s"HybridSE type from $fromType to $targetType is not supported")
         }
 
@@ -164,7 +164,7 @@ object ConstProjectPlan {
           case HybridseDataType.kBool => inputCol.cast(DoubleType)
           case HybridseDataType.kTimestamp => inputCol.cast(DoubleType).multiply(1000)
           case HybridseDataType.kDate => inputCol.cast(DoubleType)
-          case _ => throw new UnsupportedHybridSEException(
+          case _ => throw new UnsupportedHybridSeException(
             s"HybridSE type from $fromType to $targetType is not supported")
         }
 
@@ -182,7 +182,7 @@ object ConstProjectPlan {
           case HybridseDataType.kVarchar =>
             inputCol.cast(BooleanType)
 
-          case _ => throw new UnsupportedHybridSEException(
+          case _ => throw new UnsupportedHybridSeException(
             s"HybridSE type from $fromType to $targetType is not supported")
         }
 
@@ -196,7 +196,7 @@ object ConstProjectPlan {
           case HybridseDataType.kTimestamp => inputCol.cast(DateType)
           case HybridseDataType.kVarchar =>
             to_date(inputCol, "yyyy-MM-dd")
-          case _ => throw new UnsupportedHybridSEException(
+          case _ => throw new UnsupportedHybridSeException(
             s"HybridSE type from $fromType to $targetType is not supported")
         }
 
@@ -212,7 +212,7 @@ object ConstProjectPlan {
           case HybridseDataType.kDate => inputCol.cast(TimestampType)
           case HybridseDataType.kVarchar =>
             to_timestamp(inputCol)
-          case _ => throw new UnsupportedHybridSEException(
+          case _ => throw new UnsupportedHybridSeException(
             s"HybridSE type from $fromType to $targetType is not supported")
         }
 
@@ -225,11 +225,11 @@ object ConstProjectPlan {
           case HybridseDataType.kBool => inputCol.cast(StringType)
           case HybridseDataType.kTimestamp => inputCol.cast(StringType)
           case HybridseDataType.kDate => inputCol.cast(StringType)
-          case _ => throw new UnsupportedHybridSEException(
+          case _ => throw new UnsupportedHybridSeException(
             s"HybridSE type from $fromType to $targetType is not supported")
         }
 
-      case _ => throw new UnsupportedHybridSEException(
+      case _ => throw new UnsupportedHybridSeException(
         s"HybridSE schema type $targetType not supported")
     }
   }

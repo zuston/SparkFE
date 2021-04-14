@@ -16,7 +16,7 @@
 
 package com._4paradigm.hybridsql.spark
 
-import com._4paradigm.hybridse.common.HybridSEException
+import com._4paradigm.hybridse.sdk.HybridSeException
 import com._4paradigm.hybridsql.spark.utils.{NodeIndexType, SparkColumnUtil, SparkUtil}
 import org.apache.spark.sql.DataFrame
 import org.apache.spark.sql.types.StructType
@@ -93,7 +93,7 @@ class SparkInstance {
         case NodeIndexType.InternalConcatJoinNode => getDfWithIndex
         case NodeIndexType.InternalComputeNode => getDfWithIndex
         case NodeIndexType.DestNode => getDf()
-        case _ => throw new HybridSEException("Handle unsupported node index type: %s".format(nodeIndexType))
+        case _ => throw new HybridSeException("Handle unsupported node index type: %s".format(nodeIndexType))
       }
     } else {
       getDf()
@@ -129,7 +129,7 @@ object SparkInstance {
             sparkDf, ctx.getIndexInfo(nodeId).indexColumnName, ctx.getConf.addIndexColumnMethod)
           SparkInstance.fromDfAndIndexedDf(sparkDf, outputDfWithIndex)
         }
-        case _ => throw new HybridSEException("Handle unsupported node index type: %s".format(nodeIndexType))
+        case _ => throw new HybridSeException("Handle unsupported node index type: %s".format(nodeIndexType))
       }
     } else {
       SparkInstance.fromDataFrame(sparkDf)
@@ -147,7 +147,7 @@ object SparkInstance {
         case NodeIndexType.InternalComputeNode => true
         // Notice that the dest node will not accept df with index and only append index column after computing
         case NodeIndexType.DestNode => false
-        case _ => throw new HybridSEException("Handle unsupported node index type: %s".format(nodeIndexType))
+        case _ => throw new HybridSeException("Handle unsupported node index type: %s".format(nodeIndexType))
       }
     } else {
       false

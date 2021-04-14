@@ -16,7 +16,7 @@
 
 package com._4paradigm.hybridsql.spark;
 
-import com._4paradigm.hybridse.common.SerializableByteBuffer;
+import com._4paradigm.hybridse.sdk.SerializableByteBuffer;
 import org.junit.Test;
 
 import java.io.*;

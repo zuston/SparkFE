@@ -24,7 +24,7 @@
         <maven.compiler.target>1.8</maven.compiler.target>
 		<!-- Set the default project version -->
 		<default.project.version>0.1.0-SNAPSHOT</default.project.version>
-		<default.hybridse.common.version>0.1.0-SNAPSHOT</default.hybridse.common.version>
+		<default.hybridse.sdk.version>0.1.1</default.hybridse.sdk.version>
 	</properties>
 
 
@@ -36,21 +36,21 @@
 			</activation>
 			<properties>
 				<projectVersionFromProfile>${default.project.version}</projectVersionFromProfile>
-				<hybridseCommonVersionFromProfile>${default.hybridse.common.version}</hybridseCommonVersionFromProfile>
+				<hybridseCommonVersionFromProfile>${default.hybridse.sdk.version}</hybridseCommonVersionFromProfile>
 			</properties>
 		</profile>
 		<profile>
 			<id>macos</id>
 			<properties>
 				<projectVersionFromProfile>${default.project.version}-macos</projectVersionFromProfile>
-				<hybridseCommonVersionFromProfile>${default.hybridse.common.version}-macos</hybridseCommonVersionFromProfile>
+				<hybridseCommonVersionFromProfile>${default.hybridse.sdk.version}-macos</hybridseCommonVersionFromProfile>
 			</properties>
 		</profile>
 		<profile>
 			<id>allinone</id>
 			<properties>
 				<projectVersionFromProfile>${default.project.version}-allinone</projectVersionFromProfile>
-				<hybridseCommonVersionFromProfile>${default.hybridse.common.version}-allinone</hybridseCommonVersionFromProfile>
+				<hybridseCommonVersionFromProfile>${default.hybridse.sdk.version}-allinone</hybridseCommonVersionFromProfile>
 			</properties>
 		</profile>
 
@@ -219,7 +219,7 @@
 
 		<dependency>
 			<groupId>com._4paradigm.hybridse</groupId>
-			<artifactId>hybridse-common</artifactId>
+			<artifactId>hybridse-sdk</artifactId>
 			<version>${hybridseCommonVersionFromProfile}</version>
 		</dependency>
 

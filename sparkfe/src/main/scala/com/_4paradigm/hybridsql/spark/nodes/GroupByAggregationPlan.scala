@@ -17,7 +17,7 @@
 package com._4paradigm.hybridsql.spark.nodes
 
 import com._4paradigm.hybridse.codec.{Row => NativeRow}
-import com._4paradigm.hybridse.common.JITManager
+import com._4paradigm.hybridse.sdk.JitManager
 import com._4paradigm.hybridse.vm.{CoreAPI, GroupbyInterface, PhysicalGroupAggrerationNode}
 import com._4paradigm.hybridsql.spark.nodes.RowProjectPlan.ProjectConfig
 import com._4paradigm.hybridsql.spark.utils.{HybridseUtil, SparkColumnUtil}
@@ -88,8 +88,8 @@ object GroupByAggregationPlan {
         // Init JIT
         val tag = projectConfig.moduleTag
         val buffer = projectConfig.moduleNoneBroadcast.getBuffer
-        JITManager.initJITModule(tag, buffer)
-        val jit = JITManager.getJIT(tag)
+        JitManager.initJITModule(tag, buffer)
+        val jit = JitManager.getJIT(tag)
         val fn = jit.FindFunction(projectConfig.functionName)
 
         val encoder = new SparkRowCodec(projectConfig.inputSchemaSlices)

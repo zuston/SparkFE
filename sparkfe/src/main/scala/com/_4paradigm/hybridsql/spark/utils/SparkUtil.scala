@@ -16,7 +16,7 @@
 
 package com._4paradigm.hybridsql.spark.utils
 
-import com._4paradigm.hybridse.common.HybridSEException
+import com._4paradigm.hybridse.sdk.HybridSeException
 import com._4paradigm.hybridse.node.JoinType
 import org.apache.spark.sql.functions.monotonically_increasing_id
 import org.apache.spark.sql.types.{LongType, StructType}
@@ -59,7 +59,7 @@ object SparkUtil {
       case "zipwithindex" | "zip_with_index" => addColumnByZipWithIndex(spark, df, indexColName)
       case "monotonicallyincreasingid" | "monotonically_increasing_id" =>
         addColumnByMonotonicallyIncreasingId(spark, df, indexColName)
-      case _ => throw new HybridSEException("Unsupported add index column method: " + method)
+      case _ => throw new HybridSeException("Unsupported add index column method: " + method)
     }
 
   }

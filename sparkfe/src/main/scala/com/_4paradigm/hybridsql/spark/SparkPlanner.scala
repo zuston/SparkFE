@@ -16,9 +16,9 @@
 
 package com._4paradigm.hybridsql.spark
 
-import com._4paradigm.hybridse.HybridSELibrary
+import com._4paradigm.hybridse.HybridSeLibrary
 import com._4paradigm.hybridse.`type`.TypeOuterClass._
-import com._4paradigm.hybridse.common.{SQLEngine, UnsupportedHybridSEException}
+import com._4paradigm.hybridse.sdk.{SQLEngine, UnsupportedHybridSeException}
 import com._4paradigm.hybridse.node.JoinType
 import com._4paradigm.hybridse.vm._
 import com._4paradigm.hybridsql.spark.nodes._
@@ -35,7 +35,7 @@ class SparkPlanner(session: SparkSession, config: SparkFeConfig) {
   private val logger = LoggerFactory.getLogger(this.getClass)
 
   // Ensure native initialized
-  HybridSELibrary.initCore()
+  HybridSeLibrary.initCore()
   Engine.InitializeGlobalLLVM()
 
   def this(session: SparkSession) = {
@@ -212,7 +212,7 @@ class SparkPlanner(session: SparkSession, config: SparkFeConfig) {
           case ProjectType.kGroupAggregation =>
             GroupByAggregationPlan.gen(ctx, PhysicalGroupAggrerationNode.CastFrom(projectNode), children.head)
 
-          case _ => throw new UnsupportedHybridSEException (
+          case _ => throw new UnsupportedHybridSeException (
             s"Project type ${projectNode.getProject_type_} not supported")
         }
       case PhysicalOpType.kPhysicalOpGroupBy =>
@@ -226,7 +226,7 @@ class SparkPlanner(session: SparkSession, config: SparkFeConfig) {
       //case PhysicalOpType.kPhysicalOpFilter =>
       //  FilterPlan.gen(ctx, PhysicalFilterNode.CastFrom(root), children.head)
       case _ =>
-        throw new UnsupportedHybridSEException(s"Plan type $opType not supported")
+        throw new UnsupportedHybridSeException(s"Plan type $opType not supported")
     }
 
     // Set the output to context cache

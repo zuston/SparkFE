@@ -18,9 +18,9 @@ package com._4paradigm.hybridsql.spark.nodes
 
 import com._4paradigm.hybridse.`type`.TypeOuterClass.ColumnDef
 import com._4paradigm.hybridse.codec.RowView
-import com._4paradigm.hybridse.common.{HybridSEException, JITManager, SerializableByteBuffer}
+import com._4paradigm.hybridse.sdk.{HybridSeException, JitManager, SerializableByteBuffer}
 import com._4paradigm.hybridse.node.{ExprListNode, JoinType}
-import com._4paradigm.hybridse.vm.{CoreAPI, HybridSEJITWrapper, PhysicalJoinNode}
+import com._4paradigm.hybridse.vm.{CoreAPI, HybridSeJitWrapper, PhysicalJoinNode}
 import com._4paradigm.hybridsql.spark.utils.{HybridseUtil, SparkColumnUtil, SparkRowUtil, SparkUtil}
 import com._4paradigm.hybridsql.spark.{PlanContext, SparkInstance, SparkRowCodec}
 import org.apache.spark.sql.catalyst.encoders.RowEncoder
@@ -39,7 +39,7 @@ object JoinPlan {
     val joinType = node.join().join_type()
     if (joinType != JoinType.kJoinTypeLeft &&
       joinType != JoinType.kJoinTypeLast && joinType != JoinType.kJoinTypeConcat) {
-      throw new HybridSEException(s"Join type $joinType not supported")
+      throw new HybridSeException(s"Join type $joinType not supported")
     }
 
     // Handle concat join
@@ -130,7 +130,7 @@ object JoinPlan {
     }
 
     if (joinConditions.isEmpty) {
-      throw new HybridSEException("No join conditions specified")
+      throw new HybridSeException("No join conditions specified")
     }
 
     val joined = leftDf.join(rightDf, joinConditions.reduce(_ && _),  "left")
@@ -225,18 +225,18 @@ object JoinPlan {
 
     private val fn: Long = jit.FindFunction(functionName)
     if (fn == 0) {
-      throw new HybridSEException(s"Fail to find native jit function $functionName")
+      throw new HybridSeException(s"Fail to find native jit function $functionName")
     }
 
     // TODO: these are leaked
     private val encoder: SparkRowCodec = new SparkRowCodec(inputSchemaSlices)
     private val outView: RowView = new RowView(outputSchema)
 
-    def initJIT(): HybridSEJITWrapper = {
+    def initJIT(): HybridSeJitWrapper = {
       // ensure worker native
       val buffer = moduleBroadcast.getBuffer
-      JITManager.initJITModule(moduleTag, buffer)
-      JITManager.getJIT(moduleTag)
+      JitManager.initJITModule(moduleTag, buffer)
+      JitManager.getJIT(moduleTag)
     }
 
     override def apply(row: Row): Boolean = {

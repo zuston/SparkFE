@@ -21,7 +21,7 @@ import java.nio.file.Files
 
 import org.apache.commons.io.FileUtils
 
-
+/* // TODO: Do not use SQLBaseSuite
 class SlowRunSuite extends SQLBaseSuite {
 
   private var cacheDir: String = _
@@ -49,3 +49,4 @@ class SlowRunSuite extends SQLBaseSuite {
 
   testCase("cases/query/fz_sql.yaml", "4")
 }
+*/

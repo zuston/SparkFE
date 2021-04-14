@@ -16,8 +16,8 @@
 
 package com._4paradigm.hybridsql.spark.nodes
 
-import com._4paradigm.hybridse.common.{JITManager, SerializableByteBuffer}
-import com._4paradigm.hybridse.vm.{CoreAPI, HybridSEJITWrapper, PhysicalTableProjectNode}
+import com._4paradigm.hybridse.sdk.{JitManager, SerializableByteBuffer}
+import com._4paradigm.hybridse.vm.{CoreAPI, HybridSeJitWrapper, PhysicalTableProjectNode}
 import com._4paradigm.hybridsql.spark.utils.{AutoDestructibleIterator, HybridseUtil}
 import com._4paradigm.hybridsql.spark.{PlanContext, SparkInstance, SparkRowCodec}
 import org.apache.spark.sql.Row
@@ -74,8 +74,8 @@ object RowProjectPlan {
       // TODO: Do not use broadcast for prophet HybridSE op
       val buffer = projectConfig.moduleNoneBroadcast
 
-      JITManager.initJITModule(tag, buffer.getBuffer)
-      val jit = JITManager.getJIT(tag)
+      JitManager.initJITModule(tag, buffer.getBuffer)
+      val jit = JitManager.getJIT(tag)
 
       projectIter(limitIter, jit, projectConfig)
     })
@@ -86,7 +86,7 @@ object RowProjectPlan {
   }
 
 
-  def projectIter(inputIter: Iterator[Row], jit: HybridSEJITWrapper, config: ProjectConfig): Iterator[Row] = {
+  def projectIter(inputIter: Iterator[Row], jit: HybridSeJitWrapper, config: ProjectConfig): Iterator[Row] = {
     // reusable output row inst
     val outputFields = if (config.keepIndexColumn) config.outputSchemaSlices.map(_.size).sum + 1
     else config.outputSchemaSlices.map(_.size).sum
